@@ -3,6 +3,7 @@ use crate::core::state::app_env_configs::app_env_configs::AppEnvConfigs;
 use crate::core::state::data_dir::app_data_root::AppDataRoot;
 use crate::core::state::task_database::TaskDatabase;
 use crate::core::threads::third_party_task_polling_thread::handlers::fal::poll_fal_tasks::poll_fal_tasks;
+use crate::core::threads::third_party_task_polling_thread::handlers::local::poll_local_tasks::poll_local_tasks;
 use crate::core::utils::task_database_pending_statuses::TASK_DATABASE_PENDING_STATUSES;
 use crate::services::storyteller::state::storyteller_credential_manager::StorytellerCredentialManager;
 use enums::common::generation_provider::GenerationProvider;
@@ -79,8 +80,23 @@ async fn poll_iteration(
     .filter(|t| t.provider == GenerationProvider::Fal)
     .collect();
 
+  let local_tasks: Vec<&Task> = tasks.iter()
+    .filter(|t| t.provider == GenerationProvider::Local)
+    .collect();
+
+  if !local_tasks.is_empty() {
+    poll_local_tasks(
+      app_handle,
+      app_env_configs,
+      app_data_root,
+      task_database,
+      storyteller_creds_manager,
+      &local_tasks,
+    ).await;
+  }
+
   let non_fal_tasks: Vec<&Task> = tasks.iter()
-    .filter(|t| t.provider != GenerationProvider::Fal)
+    .filter(|t| t.provider != GenerationProvider::Fal && t.provider != GenerationProvider::Local)
     .collect();
 
   if !non_fal_tasks.is_empty() {

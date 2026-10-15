@@ -120,6 +120,9 @@ export const getModelDisplayName = (
     seedream_5p0_pro_u: "Seedream 5.0 Pro Ultra",
     seededit_3: "SeedEdit 3",
 
+    // Local (on-device)
+    qwen_image_2p1_turbo_local: "Qwen-Image 2.1 Turbo (Local)",
+
     // Audio — Suno
     suno_music: "Suno Music",
     suno_remix: "Suno Remix",
@@ -217,6 +220,7 @@ export const getProviderDisplayName = (provider: string): string => {
     midjourney: "Midjourney",
     sora: "Sora",
     worldlabs: "World Labs",
+    local: "This Mac (local)",
   };
 
   return displayNames[provider] || provider;

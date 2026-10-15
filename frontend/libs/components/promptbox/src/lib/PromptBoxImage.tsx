@@ -81,6 +81,8 @@ export const PromptBoxImage = ({
     [catalogModel, selectedProvider],
   );
   const isDirectMidjourney = selectedProvider === GenerationProvider.Midjourney;
+  // On-device generation costs no credits.
+  const isLocal = selectedProvider === GenerationProvider.Local;
 
 
   console.debug(
@@ -583,7 +585,7 @@ export const PromptBoxImage = ({
                 onClick={handleEnqueue}
                 disabled={!prompt.trim()}
                 loading={isEnqueueing}
-                credits={isDirectMidjourney ? 0 : credits}
+                credits={isDirectMidjourney || isLocal ? 0 : credits}
               />
             </div>
           </div>

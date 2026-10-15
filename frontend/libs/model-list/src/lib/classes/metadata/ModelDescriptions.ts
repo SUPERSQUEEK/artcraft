@@ -22,6 +22,7 @@ const MODEL_DESCRIPTIONS: Record<string, string> = {
   seedream_5_lite: "Lightweight, fast visual reasoning",
   seedream_5p0_pro: "Seedream's flagship image quality",
   seedream_5p0_pro_u: "Highest-fidelity Seedream tier",
+  qwen_image_2p1_turbo_local: "Runs on this Mac, free and private",
   // ── Video models ── (seedance_2p0 intentionally omitted)
   flux_3: "Video generation by Black Forest Labs",
   grok_video: "Stylized video generation by xAI",

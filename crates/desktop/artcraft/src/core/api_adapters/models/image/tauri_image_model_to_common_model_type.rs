@@ -32,5 +32,6 @@ pub fn tauri_image_model_to_common_model_type(model: TauriImageModel) -> CommonM
     TauriImageModel::Flux2LoraAngles => CommonModelType::Flux2LoraAngles,
     TauriImageModel::FluxDevJuggernaut => CommonModelType::FluxDevJuggernaut,
     TauriImageModel::FluxPro1 => CommonModelType::FluxPro1,
+    TauriImageModel::QwenImage2p1TurboLocal => CommonModelType::Qwen,
   }
 }

@@ -7,6 +7,7 @@ use crate::core::commands::enqueue::common::notify_frontend_of_errors::notify_fr
 use crate::core::commands::enqueue::generate_error::{GenerateError, MissingCredentialsReason};
 use crate::core::commands::enqueue::task_enqueue_success::TaskEnqueueSuccess;
 use crate::core::commands::generate::generate_image::providers::artcraft::handle_artcraft;
+use crate::core::commands::generate::generate_image::providers::local::handle_local::handle_local;
 use crate::core::commands::generate::generate_image::providers::artcraft_router::handle_router::handle_router;
 use crate::core::commands::generate::generate_image::tauri_generate_image_request::{
   TauriGenerateImageErrorType, TauriGenerateImageRequest, TauriGenerateImageResponse,
@@ -58,6 +59,9 @@ async fn generate_image_native(
     }
     GenerationProvider::Midjourney => {
       handle_midjourney(&request, &app_env_configs, &app.state(), &storyteller_creds_manager).await
+    }
+    GenerationProvider::Local => {
+      handle_local(&request, &app_env_configs, &storyteller_creds_manager).await
     }
     // All other providers go through the router.
     other => {

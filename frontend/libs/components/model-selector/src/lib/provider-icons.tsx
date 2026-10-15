@@ -65,6 +65,8 @@ export const getProviderDisplayName = (provider: GenerationProvider): string => 
       return "PixVerse";
     case GenerationProvider.Runway:
       return "Runway";
+    case GenerationProvider.Local:
+      return "This Mac (local)";
     default:
       return "Unknown Provider";
   }

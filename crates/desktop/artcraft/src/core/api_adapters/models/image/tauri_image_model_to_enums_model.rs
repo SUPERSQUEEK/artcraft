@@ -34,5 +34,6 @@ pub fn tauri_image_model_to_enums_model(model: TauriImageModel) -> Option<Common
     TauriImageModel::Midjourney => None, // NB: Generic Midjourney is served by the native Midjourney provider.
     TauriImageModel::FluxProKontextMax => None,
     TauriImageModel::FluxDevJuggernaut => None,
+    TauriImageModel::QwenImage2p1TurboLocal => None, // NB: Served by the on-device Local provider.
   }
 }

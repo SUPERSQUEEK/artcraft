@@ -78,4 +78,9 @@ pub enum TauriImageModel {
   FluxDevJuggernaut,
   #[serde(rename = "flux_pro_1")]
   FluxPro1,
+
+  // Local models, served by an on-device inference server.
+
+  #[serde(rename = "qwen_image_2p1_turbo_local")]
+  QwenImage2p1TurboLocal,
 }
