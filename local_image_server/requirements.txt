@@ -1,4 +1,5 @@
 torch>=2.9
+torchvision
 # QwenImage21Pipeline needs diffusers from source (pipeline-configured sigmas).
 diffusers @ git+https://github.com/huggingface/diffusers
 transformers>=5.17.0
