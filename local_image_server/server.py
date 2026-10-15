@@ -12,6 +12,7 @@ don't fit in 36 GB unified memory together, so the transformer + VAE stay reside
 the text encoder is loaded per job, used, and freed before denoising.
 """
 
+import errno
 import gc
 import json
 import logging
@@ -212,9 +213,16 @@ class Handler(BaseHTTPRequestHandler):
 def main():
   logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
   OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+  try:
+    server = ThreadingHTTPServer((HOST, PORT), Handler)
+  except OSError as err:
+    if err.errno != errno.EADDRINUSE:
+      raise
+    log.error("port %d is already in use — the server is probably already running (check: lsof -i :%d)", PORT, PORT)
+    raise SystemExit(1)
   threading.Thread(target=worker, daemon=True).start()
   log.info("serving on http://%s:%d (device=%s, output=%s)", HOST, PORT, DEVICE, OUTPUT_DIR)
-  ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
+  server.serve_forever()
 
 
 if __name__ == "__main__":
