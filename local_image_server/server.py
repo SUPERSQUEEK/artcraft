@@ -51,6 +51,7 @@ MAX_REFERENCE_IMAGES = 3
 MAX_REFERENCE_BYTES = 30 * 1024 * 1024
 # Matches the pipeline's `output_resolution` default; condition images are resized to this area.
 OUTPUT_RESOLUTION = 1024
+USER_AGENT = "ArtCraft-LocalImageServer/1.0"
 FILE_NAME_RE = re.compile(r"^local_[0-9a-f]{32}_\d+\.png$")
 
 log = logging.getLogger("local_image_server")
@@ -145,7 +146,9 @@ class Engine:
 
 def load_image(source):
   if source.startswith(("http://", "https://")):
-    with urllib.request.urlopen(source, timeout=60) as response:
+    # NB: The ArtCraft CDN rejects urllib's default "Python-urllib" user agent with a 403.
+    request = urllib.request.Request(source, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(request, timeout=60) as response:
       data = response.read(MAX_REFERENCE_BYTES + 1)
   else:
     data = base64.b64decode(source)
