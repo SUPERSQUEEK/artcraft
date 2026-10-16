@@ -16,9 +16,15 @@ const LOCAL_IMAGE_SERVER_URL_ENV: &str = "ARTCRAFT_LOCAL_IMAGE_SERVER_URL";
 pub struct LocalEnqueueRequest<'a> {
   pub model: &'a str,
   pub prompt: &'a str,
-  pub width: u32,
-  pub height: u32,
+  /// Output size. Omit both to follow the last reference image's aspect ratio.
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub width: Option<u32>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub height: Option<u32>,
   pub num_images: u32,
+  /// Reference images for editing: http(s) URLs or base64-encoded image bytes.
+  #[serde(skip_serializing_if = "Vec::is_empty")]
+  pub images: Vec<String>,
 }
 
 #[derive(Deserialize, Debug)]

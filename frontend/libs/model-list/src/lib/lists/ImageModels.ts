@@ -696,13 +696,15 @@ export const IMAGE_MODELS: ImageModel[] = [
     predefinedGenerationCounts: [1, 2, 4],
     maxPromptLength: 4000,
     canTextToImage: true,
-    canEditImages: false,
-    canUseImagePrompt: false,
-    maxImagePromptCount: 0,
+    canEditImages: true,
+    canUseImagePrompt: true,
+    maxImagePromptCount: 3,
     progressBarTime: 120000,
     canChangeAspectRatio: true,
     defaultAspectRatio: CommonAspectRatio.Square,
     aspectRatios: [
+      // Auto follows the reference image when editing (square otherwise).
+      CommonAspectRatio.Auto,
       CommonAspectRatio.Square,
       CommonAspectRatio.WideThreeByTwo,
       CommonAspectRatio.WideFourByThree,
